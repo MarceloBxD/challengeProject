@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { Header } from "../../components/Header";
 import {
   Flex,
+  Button,
   Text,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
-  Button,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -26,8 +24,8 @@ export const Prices = () => {
         Mostrar tabela com preços
       </Button>
       {showTable && (
-        <TableContainer w="500px" m="0 auto">
-          <Table mt="50px" size="md">
+        <TableContainer w="800px" m="0 auto">
+          <Table mt="50px" size="lg">
             <Thead>
               <Tr>
                 <Th>Plan</Th>

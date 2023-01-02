@@ -6,7 +6,6 @@ export const Soluctions = () => {
   return (
     <Flex flexDir="column">
       <Header />
-      Soluctions...
     </Flex>
   );
 };

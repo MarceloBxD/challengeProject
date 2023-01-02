@@ -1,20 +1,64 @@
-import { Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Header } from "../../components/Header";
 import {
+  Flex,
+  Textarea,
   Input,
   FormControl,
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Checkbox,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
 
 export const Contact = () => {
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const toast = useToast();
+
+  {
+    email && phone && country && message
+      ? () => setIsDisabled(false)
+      : () => setIsDisabled(true);
+  }
 
   const isError = email === "";
+
+  const sendInfos = () => {
+    console.log("Email: ", email);
+    console.log("Country: ", country);
+    console.log("Phone: ", phone);
+    console.log("Message: ", message);
+
+    if (email && phone && country && message) {
+      toast({
+        title: "Your message was invited as sucessfuly.",
+        description: "We are caring about this to you.",
+        status: "success",
+        duration: 1500,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Your message was not invited as sucessfuly.",
+        description: "Please, fill all the fields.",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    }
+
+    setEmail("");
+    setCountry("");
+    setPhone("");
+    setMessage("");
+  };
 
   return (
     <Flex flexDir="column">
@@ -24,6 +68,7 @@ export const Contact = () => {
           <FormLabel>Email</FormLabel>
           <Input
             type="email"
+            placeholder="user@mail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -38,8 +83,10 @@ export const Contact = () => {
           <Input
             type="tel"
             value={phone}
+            placeholder="(00) 0000-0000"
             onChange={(e) => setPhone(e.target.value)}
           />
+
           {!isError ? (
             <FormHelperText>
               Give us your phone number so we can contact you.
@@ -50,6 +97,7 @@ export const Contact = () => {
           <FormLabel>Country</FormLabel>
           <Input
             type="text"
+            placeholder="Brazil"
             value={country}
             onChange={(e) => {
               setCountry(e.target.value);
@@ -60,6 +108,29 @@ export const Contact = () => {
           ) : (
             <FormErrorMessage>Country is required.</FormErrorMessage>
           )}
+          <FormLabel>Message</FormLabel>
+          <Textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Your message"
+          />
+          <Checkbox
+            isDisabled={isDisabled}
+            isChecked={isChecked}
+            onChange={(e) => {
+              setIsChecked(e.target.checked);
+            }}
+          >
+            Eu concordo com a Política de Privacidade.
+          </Checkbox>
+          <Button
+            onClick={() => sendInfos()}
+            colorScheme="blue"
+            variant="ghost"
+            type="submit"
+          >
+            Send
+          </Button>
         </Flex>
       </FormControl>
     </Flex>
