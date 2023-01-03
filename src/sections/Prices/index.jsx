@@ -20,7 +20,11 @@ export const Prices = () => {
   return (
     <Flex flexDir="column">
       <Header />
-      <Button onClick={() => setShowTable(!showTable)}>
+      <Button
+        variant="ghost"
+        colorScheme="cyan"
+        onClick={() => setShowTable(!showTable)}
+      >
         Mostrar tabela com preços
       </Button>
       {showTable && (

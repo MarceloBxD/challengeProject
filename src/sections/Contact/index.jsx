@@ -22,11 +22,16 @@ export const Contact = () => {
   const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
 
-  {
-    email && phone && country && message
-      ? () => setIsDisabled(false)
-      : () => setIsDisabled(true);
-  }
+  const handlekeyUp = (e) => {
+    if (e.target.value.length < 15) {
+      e.target.value = e.target.value.replace(/\D/g, "");
+      e.target.value = e.target.value.replace(/^(\d{2})(\d)/g, "($1) $2");
+      e.target.value = e.target.value.replace(/(\d)(\d{3})$/, "$1-$2");
+    } else {
+      // nao deixa digitar mais que 15 caracteres
+      e.target.value = e.target.value.substring(0, 15);
+    }
+  };
 
   const isError = email === "";
 
@@ -36,7 +41,7 @@ export const Contact = () => {
     console.log("Phone: ", phone);
     console.log("Message: ", message);
 
-    if (email && phone && country && message) {
+    if (isError) {
       toast({
         title: "Your message was invited as sucessfuly.",
         description: "We are caring about this to you.",
@@ -85,6 +90,7 @@ export const Contact = () => {
             value={phone}
             placeholder="(00) 0000-0000"
             onChange={(e) => setPhone(e.target.value)}
+            onKeyUp={handlekeyUp}
           />
 
           {!isError ? (
